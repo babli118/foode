@@ -6,6 +6,9 @@ import Features from "../components/features";
 import Trending from "../components/trending";
 import Link from "next/link";
 
+import { getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseApp";
+
 const Homepage = ({ trend, user }) => {
   return (
     <>

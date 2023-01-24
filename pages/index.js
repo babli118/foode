@@ -1,13 +1,5 @@
 import Head from "next/head";
-import { db, initFirebase } from "../firebase/firebaseApp";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import Signin from "./signin";
 import Homepage from "./homepage";
