@@ -3,7 +3,6 @@ import Link from "next/link";
 import image from "../images/2.svg";
 import Image from "next/image";
 import Dropdown from "./dropdown";
-import Burger from "./burger";
 import { useRouter } from "next/router";
 
 const Navbar = ({ user }) => {
