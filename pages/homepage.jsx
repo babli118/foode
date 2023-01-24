@@ -6,21 +6,7 @@ import Features from "../components/features";
 import Trending from "../components/trending";
 import Link from "next/link";
 
-import { getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebaseApp";
-
 const Homepage = ({ trend, user }) => {
-  const fetchData = async () => {
-    const docRef = doc(db, "users");
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  };
   return (
     <>
       <div className="hero relative overflow-hidden ">

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Signin from "./signin";
 import Homepage from "./homepage";
 
-export default function Home({ posts }) {
+export default function Home({ data }) {
   const auth = getAuth();
 
   const [user, setUser] = useState({});
@@ -43,16 +43,16 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="font overflow-x-hidden">
-        {user ? <Homepage user={user} trend={posts} /> : <Signin />}
+        {user ? <Homepage user={user} trend={data} /> : <Signin />}
       </main>
     </>
   );
 }
 
-Home.getInitialProps = async (ctx) => {
+export async function getServerSideProps() {
   const res = await fetch(
     "https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian"
   );
   const data = await res.json();
-  return { posts: data };
-};
+  return { props: { data } };
+}
