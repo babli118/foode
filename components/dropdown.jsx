@@ -12,7 +12,7 @@ const Dropdown = ({ user }) => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  let name = user ? user.email : user.displayName;
+  let name = user ? user.email : "A";
   let letter = name ? name.charAt(0) : "A";
 
   const signOut = () => {
