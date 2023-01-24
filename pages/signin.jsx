@@ -28,6 +28,7 @@ const Signin = () => {
       email: res.user.email,
       orders: [""],
     });
+    router.push("/");
   };
 
   const login = async (event) => {

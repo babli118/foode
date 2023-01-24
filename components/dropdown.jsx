@@ -27,7 +27,7 @@ const Dropdown = ({ user }) => {
     >
       <div>
         <Menu.Button className="inline-flex w-full z-10 outline-none justify-center items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-          {user && user.photoURL && user.photoURL.legnth > 5 ? (
+          {user && user.photoURL ? (
             <Image
               alt="carousel"
               height={10}
