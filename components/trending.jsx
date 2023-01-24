@@ -8,22 +8,26 @@ const Trending = ({ trend }) => {
         - Trending Meals -
       </h1>
       <div className="grid overflow-hidden max-sm:grid-cols-3  grid-cols-4 gap-x-8 gap-y-6 text-center">
-        {trend.map((meal) => (
-          <div
-            className="flex justify-center z-10 hover:cursor-pointer hover:scale-110 transition-all shadow-lg items-center flex-col "
-            key={meal.idMeal}
-          >
-            <Image
-              src={meal.strMealThumb}
-              className={"rounded-xl"}
-              height={100}
-              width={210}
-            />
-            <div className=" text-lg text-white font-semibold py-1">
-              {meal.strMeal}
+        {trend && trend.meals ? (
+          trend.map((meal) => (
+            <div
+              className="flex justify-center z-10 hover:cursor-pointer hover:scale-110 transition-all shadow-lg items-center flex-col "
+              key={meal.idMeal}
+            >
+              <Image
+                src={meal.strMealThumb}
+                className={"rounded-xl"}
+                height={100}
+                width={210}
+              />
+              <div className=" text-lg text-white font-semibold py-1">
+                {meal.strMeal}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <h1>Loading</h1>
+        )}
       </div>
     </div>
   );
