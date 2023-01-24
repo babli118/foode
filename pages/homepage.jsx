@@ -44,7 +44,7 @@ const Homepage = ({ trend, user }) => {
           <div className="logo font-semibold text-5xl">Foode</div>
         </div>
       </div>
-      <Trending trend={trend.meals} />
+      <Trending trend={trend} />
       <Features />
     </>
   );
