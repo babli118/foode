@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import image from "../images/2.svg";
 import Image from "next/image";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -10,7 +9,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase/firebaseApp";
 import { setDoc, doc } from "firebase/firestore";
-import { ToastContainer, toast } from "react-toastify";
 
 const Signin = () => {
   const router = useRouter();
@@ -26,14 +24,19 @@ const Signin = () => {
   });
 
   const signIn = async () => {
-    const res = await signInWithPopup(auth, provider);
-
-    await setDoc(doc(db, "users", res.user.uid), {
-      name: res.user.displayName,
-      email: res.user.email,
-      orders: [""],
-    });
-    router.push("/");
+    try {
+      const res = await signInWithPopup(auth, provider);
+      setUser(res);
+      console.log(res);
+      await setDoc(doc(db, "users", res.user.uid), {
+        name: res.user.displayName,
+        email: res.user.email,
+        orders: [""],
+      });
+      router.push("/");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const login = async (event) => {
