@@ -7,7 +7,6 @@ import Trending from "../components/trending";
 import Link from "next/link";
 
 const Homepage = ({ trend, user }) => {
-  console.log(user);
   return (
     <>
       <div className="hero relative overflow-hidden ">

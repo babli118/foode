@@ -2,14 +2,26 @@ import React from "react";
 import image from "../images/2.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "../firebase/firebaseApp";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
 
 const Foot = () => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => {};
+  });
+
   return (
     <div className="h-[60vh] overflow-hidden max-sm:h-[50vh]">
       <div className="h-[18vh] max-sm:hidden max-sm:h-[0vh]  flex flex-col justify-center items-center font-semibold text-2xl text-[#1c2123] bg-red-400 text-center">
         <h1>Enjoy 40% off on your first order</h1>
         <Link
-          href={"/meals"}
+          href={user ? "/meals" : "/signin"}
           className="text-lg mt-4 transform hover:scale-105 group/edit  text-center flex justify-center items-center px-10 py-2 transition-all rounded-lg bg-yellow-400 hover:text-black"
         >
           Order Now{" "}

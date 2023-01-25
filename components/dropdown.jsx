@@ -31,7 +31,7 @@ const Dropdown = ({ user }) => {
       {user ? (
         <div>
           <div>
-            <Menu.Button className="inline-flex w-full z-10 outline-none justify-center items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+            <Menu.Button className="inline-flex w-full z-10 outline-none justify-center items-center rounded-md border border-gray-300 sm:ml-1 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
               {user && user.photoURL ? (
                 <Image
                   alt="carousel"
@@ -60,8 +60,8 @@ const Dropdown = ({ user }) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute outline-none right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="py-1 z-50">
+            <Menu.Items className="absolute shadow-black/20 mb-2 outline-none right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1 mb-2 z-50">
                 <Menu.Item>
                   {({ active }) => (
                     <Link
@@ -91,19 +91,6 @@ const Dropdown = ({ user }) => {
                 <Menu.Item>
                   {({ active }) => (
                     <Link
-                      href="/about"
-                      className={classNames(
-                        active ? "bg-gray-800 text-white" : "text-gray-700",
-                        "max-sm:block  px-4 py-2 text-sm hidden z-50 "
-                      )}
-                    >
-                      About
-                    </Link>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
                       href={`/cart/${user ? user.uid : null}`}
                       className={classNames(
                         active ? "bg-gray-800 text-white" : "text-gray-700",
@@ -111,6 +98,19 @@ const Dropdown = ({ user }) => {
                       )}
                     >
                       Check Cart
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href="/about"
+                      className={classNames(
+                        active ? "bg-gray-800 text-white" : "text-gray-700",
+                        "max-sm:block  px-4 py-2 text-sm hidden z-50 "
+                      )}
+                    >
+                      About
                     </Link>
                   )}
                 </Menu.Item>

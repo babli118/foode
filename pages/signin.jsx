@@ -141,9 +141,9 @@ const Signin = () => {
                 </div>
               </div>
               <div className="text-center">
-                Dont have an account ? &#20; &#20; &#20;&#20;
+                Dont have an account ?
                 <Link
-                  className=" text-red-600 transition-all font-semibold hover:underline "
+                  className="ml-2 text-red-600 transition-all font-semibold hover:underline "
                   href="/signup"
                 >
                   Signup

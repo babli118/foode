@@ -10,8 +10,8 @@ const Navbar = ({ user }) => {
 
   return (
     <div className="text-white text-lg  ">
-      <div className="flex w-[100vw] gap-4 max-sm:flex-row px-14 max-sm:px-10 font-bold   py-1 justify-between items-center ">
-        <div className="gap-x-6 flex max-sm:hidden">
+      <div className="flex w-[100vw]  max-sm:flex-row px-14 max-sm:px-10 font-bold   py-1 justify-between items-center ">
+        <div className="gap-x-6 items-center justify-center flex max-sm:hidden">
           <Link
             className={
               router.pathname == "/"
@@ -43,16 +43,19 @@ const Navbar = ({ user }) => {
             About
           </Link>
         </div>
-        <Link href={"/"} className="flex  flex-col items-center ">
+        <Link
+          href={"/"}
+          className="flex  flex-col justify-center items-center "
+        >
           <Image height={70} width={75} src={image} />
           <h1 className="text-white logo text-3xl  ">Foode</h1>
         </Link>
-        <div className="gap-x-6 max-sm:gap-x-4 flex justify-center items-center ">
+        <div className="gap-x-6 sm:mr-4 max-sm:gap-x-4 flex justify-center items-center ">
           {user ? (
             <Link
               title="Cart"
               href={{
-                pathname: `/cart/${user ? user.uid : null}`,
+                pathname: `/cart/${user.uid}`,
                 query: user,
               }}
             >

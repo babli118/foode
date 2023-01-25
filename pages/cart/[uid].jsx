@@ -104,7 +104,7 @@ const Uid = ({ user }) => {
             ) : (
               meals.map((meal) => (
                 <div
-                  className="flex justify-between  transition-all max-sm:gap-2 gap-10 text-start h-18 shadow-2xl items-center border-2  border-black/30 rounded-lg pr-4"
+                  className="flex max-sm:grid max-sm:grid-cols-2 justify-between  transition-all max-sm:gap-2 gap-10 text-start h-18 shadow-2xl items-center border-2  border-black/30 rounded-lg pr-4"
                   key={meal.idMeal}
                   id={meal.idMeal}
                 >
@@ -117,7 +117,7 @@ const Uid = ({ user }) => {
                     <h1 className="text-gray-900 max-sm:text-base text-lg">
                       {meal.strMeal}
                     </h1>
-                    <div className="bg-red-100 gap-1 max-sm:hidden border max-sm:text-sm font-serif text-red-500 border-red-500 rounded-full text-sm flex justify-center items-center  px-2 py-1 max-sm:ml-0 ml-4">
+                    <div className="bg-red-100  gap-1 max-sm:hidden border max-sm:text-sm font-serif text-red-500 border-red-500 rounded-full text-sm flex justify-center items-center  px-2 py-1 max-sm:ml-0 ml-4">
                       <p>Rs</p> <p>500</p>
                     </div>
                   </div>
