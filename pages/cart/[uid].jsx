@@ -45,7 +45,7 @@ const Uid = () => {
     }
   }, [user]);
 
-  async function fetchOrdersData() {
+  const fetchOrdersData = async () => {
     setMeals([]);
     setIsLoading(true);
 
@@ -55,9 +55,7 @@ const Uid = () => {
       );
       const data = await res.json();
 
-      if (!res.ok) {
-        console.log(res.statusText);
-      } else if (data.meals) {
+      if (data.meals) {
         setMeals((prevMeals) => [...prevMeals, data.meals[0]]);
       } else {
         console.log("Data not found for this id");
@@ -66,7 +64,7 @@ const Uid = () => {
     setIsLoading(false);
     setTotalPrice(orders.length * 500);
     setOrderTotal(orders.length * 500 + 200);
-  }
+  };
 
   const handleDelete = async (e) => {
     const id = e.target.parentElement.id;

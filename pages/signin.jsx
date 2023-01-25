@@ -4,8 +4,9 @@ import image from "../images/2.svg";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase/firebaseApp";
 import { setDoc, doc } from "firebase/firestore";
@@ -13,12 +14,16 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Signin = () => {
   const router = useRouter();
-
   const [pass, setPass] = useState("");
   const [email, setEmail] = useState("");
-
+  const [user, setUser] = useState({});
   const provider = new GoogleAuthProvider();
-  const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  });
 
   const signIn = async () => {
     const res = await signInWithPopup(auth, provider);
