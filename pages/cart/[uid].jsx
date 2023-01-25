@@ -4,51 +4,38 @@ import "firebase/firestore";
 import Link from "next/link";
 import Foot from "../../components/footer";
 import { Circles } from "react-loader-spinner";
-import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase/firebaseApp";
 import { updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { arrayRemove } from "firebase/firestore";
+import { useRouter } from "next/router";
 
-const Uid = () => {
-  const [user, setUser] = useState({});
+const Uid = ({ user }) => {
   const [meals, setMeals] = useState([]);
   const [orders, setOrders] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetched, setIsFetched] = useState(false);
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    try {
-      if (!isFetched) {
-        const docRef = doc(db, "users", user.uid);
 
-        async function onLoad() {
-          try {
-            const docSnap = await getDoc(docRef);
-            const orders = await docSnap.data().orders;
-            setOrders(orders);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        onLoad();
-      } else {
-        return;
-      }
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    async function onLoad() {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      const orders = await docSnap.data().orders;
+      const filteredOrders = orders.filter((order) => order.length > 2);
+      console.log(filteredOrders);
+      setOrders(filteredOrders);
     }
-  }, [user]);
+
+    onLoad();
+  }, [orders, user.uid]);
 
   const fetchOrdersData = async () => {
     setMeals([]);
-    setIsLoading(true);
+    console.log(orders);
 
+    setIsLoading(true);
     for (const id of orders) {
       const res = await fetch(
         `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
@@ -72,18 +59,17 @@ const Uid = () => {
     const mealRef = doc(db, "users", user.uid);
 
     // Remove the selected meal from the document
+    const filteredMeals = meals.filter((meal) => meal.idMeal !== id);
+    setMeals(filteredMeals);
 
     await updateDoc(mealRef, {
       orders: arrayRemove(id),
     });
-    const filteredMeals = meals.filter((meal) => meal.idMeal !== id);
-    setMeals(filteredMeals);
     const filteredOrders = orders.filter((order) => order !== id);
     setOrders(filteredOrders);
     setTotalPrice(filteredOrders.length * 500);
     setOrderTotal(filteredOrders.length * 500 + 200);
   };
-  console.log(orders);
 
   return (
     <div className="overflow-hidden ">
@@ -189,5 +175,11 @@ const Uid = () => {
     </div>
   );
 };
+Uid.getInitialProps = async (ctx) => {
+  // Fetch data from external API
+  const { query } = ctx;
 
+  // Pass data to the page via props
+  return { user: query };
+};
 export default Uid;

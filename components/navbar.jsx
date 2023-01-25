@@ -48,12 +48,20 @@ const Navbar = ({ user }) => {
           <h1 className="text-white logo text-3xl  ">Foode</h1>
         </Link>
         <div className="gap-x-6 max-sm:gap-x-4 flex justify-center items-center ">
-          <Link href={`/cart/${user ? user.uid : null}`}>
-            <img
-              className="w-10"
-              src="https://img.icons8.com/ios/50/FFFFFF/food-donor.png"
-            />
-          </Link>
+          {user ? (
+            <Link
+              title="Cart"
+              href={{
+                pathname: `/cart/${user ? user.uid : null}`,
+                query: user,
+              }}
+            >
+              <img
+                className="w-10"
+                src="https://img.icons8.com/ios/50/FFFFFF/food-donor.png"
+              />
+            </Link>
+          ) : null}
           <Dropdown user={user} />
         </div>
       </div>

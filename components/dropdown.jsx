@@ -20,7 +20,7 @@ const Dropdown = ({ user }) => {
     const auth = getAuth();
     auth.signOut();
 
-    router.push("/");
+    router.push("/signin");
   };
 
   return (
@@ -28,108 +28,115 @@ const Dropdown = ({ user }) => {
       as="div"
       className="relative z-50 inline-block text-left outline-none"
     >
-      <div>
-        <Menu.Button className="inline-flex w-full z-10 outline-none justify-center items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-          {user && user.photoURL ? (
-            <Image
-              alt="carousel"
-              height={10}
-              width={1000}
-              src={user.photoURL}
-              className="rounded-full w-12 bg-white h-12 text-red-500 flex items-center justify-center text-center"
-            />
-          ) : (
-            <h1 className="rounded-full w-8 bg-white h-8 text-red-500 flex items-center justify-center text-center">
-              {letter}
-            </h1>
-          )}
-          <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
-        </Menu.Button>
-      </div>
-
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="absolute outline-none right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1 z-50">
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/cart"
-                  className={classNames(
-                    active ? "bg-gray-800 text-white" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  {user.email}
-                </Link>
+      {user ? (
+        <div>
+          <div>
+            <Menu.Button className="inline-flex w-full z-10 outline-none justify-center items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+              {user && user.photoURL ? (
+                <Image
+                  alt="carousel"
+                  height={10}
+                  width={1000}
+                  src={user.photoURL}
+                  className="rounded-full w-12 bg-white h-12 text-red-500 flex items-center justify-center text-center"
+                />
+              ) : (
+                <h1 className="rounded-full w-8 bg-white h-8 text-red-500 flex items-center justify-center text-center">
+                  {letter}
+                </h1>
               )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/meals"
-                  className={classNames(
-                    active ? "bg-gray-800 text-white" : "text-gray-700",
-                    "max-sm:block  px-4 py-2 text-sm hidden z-50"
-                  )}
-                >
-                  Order Now
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/about"
-                  className={classNames(
-                    active ? "bg-gray-800 text-white" : "text-gray-700",
-                    "max-sm:block  px-4 py-2 text-sm hidden z-50 "
-                  )}
-                >
-                  About
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href={`/cart/${user ? user.uid : null}`}
-                  className={classNames(
-                    active ? "bg-gray-800 text-white" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Check Cart
-                </Link>
-              )}
-            </Menu.Item>
-
-            <form method="POST" action="">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    type="submit"
-                    onClick={signOut}
-                    className={classNames(
-                      active ? "bg-gray-800 text-white" : "text-gray-700",
-                      "block w-full px-4 py-2 text-left text-sm"
-                    )}
-                  >
-                    Sign out
-                  </button>
-                )}
-              </Menu.Item>
-            </form>
+              <ChevronDownIcon
+                className="-mr-1 ml-2 h-5 w-5"
+                aria-hidden="true"
+              />
+            </Menu.Button>
           </div>
-        </Menu.Items>
-      </Transition>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="absolute outline-none right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1 z-50">
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href="/cart"
+                      className={classNames(
+                        active ? "bg-gray-800 text-white" : "text-gray-700",
+                        "block px-4 py-2 text-sm"
+                      )}
+                    >
+                      {user.email}
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href="/meals"
+                      className={classNames(
+                        active ? "bg-gray-800 text-white" : "text-gray-700",
+                        "max-sm:block  px-4 py-2 text-sm hidden z-50"
+                      )}
+                    >
+                      Order Now
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href="/about"
+                      className={classNames(
+                        active ? "bg-gray-800 text-white" : "text-gray-700",
+                        "max-sm:block  px-4 py-2 text-sm hidden z-50 "
+                      )}
+                    >
+                      About
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href={`/cart/${user ? user.uid : null}`}
+                      className={classNames(
+                        active ? "bg-gray-800 text-white" : "text-gray-700",
+                        "block px-4 py-2 text-sm"
+                      )}
+                    >
+                      Check Cart
+                    </Link>
+                  )}
+                </Menu.Item>
+                <form method="POST" action="">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        type="submit"
+                        onClick={signOut}
+                        className={classNames(
+                          active ? "bg-gray-800 text-white" : "text-gray-700",
+                          "block w-full px-4 py-2 text-left text-sm"
+                        )}
+                      >
+                        Sign out
+                      </button>
+                    )}
+                  </Menu.Item>
+                </form>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </div>
+      ) : (
+        <Link href={"/signin"}>Signin</Link>
+      )}
     </Menu>
   );
 };

@@ -10,6 +10,7 @@ import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 const Id = ({ meals }) => {
   const [user, setUser] = useState({});
@@ -106,12 +107,21 @@ const Id = ({ meals }) => {
                 <p className="bg-red-100 border font-serif text-red-500 border-red-500 rounded-full text-sm  px-4 py-4 ml-20 inline-block my-4">
                   Rs 500
                 </p>
-                <button
-                  onClick={handleCart}
-                  className="bg-red-500 font-semibold text-white border-1 border-red-500 px-4 py-4 focus:outline-none rounded-lg  transform transition duration-300 hover:scale-105"
-                >
-                  Add to Cart
-                </button>
+                {user === null ? (
+                  <Link
+                    href={"/signin"}
+                    className="bg-red-500 font-semibold text-white border-1 border-red-500 px-4 py-4 focus:outline-none rounded-lg  transform transition duration-300 hover:scale-105"
+                  >
+                    Sign in
+                  </Link>
+                ) : (
+                  <button
+                    onClick={handleCart}
+                    className="bg-red-500 font-semibold text-white border-1 border-red-500 px-4 py-4 focus:outline-none rounded-lg  transform transition duration-300 hover:scale-105"
+                  >
+                    Add to Cart
+                  </button>
+                )}
               </div>
             </div>
           </div>

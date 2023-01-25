@@ -35,7 +35,7 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="font overflow-x-hidden">
-        {user ? <Homepage user={user} trend={data.meals} /> : <Signin />}
+        <Homepage user={user} trend={data.meals} />
       </main>
     </>
   );
