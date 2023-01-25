@@ -44,7 +44,6 @@ const Id = ({ meals }) => {
     } catch (error) {
       console.log(error);
     }
-    console.log("done");
   };
 
   return (

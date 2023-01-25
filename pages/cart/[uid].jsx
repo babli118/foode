@@ -17,6 +17,8 @@ const Uid = ({ user }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [orderStatus, setOrderStatus] = useState(false);
+  const [MealsStatus, setMealsStatus] = useState(false);
 
   useEffect(() => {
     async function onLoad() {
@@ -24,17 +26,16 @@ const Uid = ({ user }) => {
       const docSnap = await getDoc(docRef);
       const orders = await docSnap.data().orders;
       const filteredOrders = orders.filter((order) => order.length > 2);
-      console.log(filteredOrders);
-      setOrders(filteredOrders);
-    }
 
+      setOrders(filteredOrders);
+      orders.length === 0 ? setOrderStatus(true) : null;
+    }
     onLoad();
-  }, [orders, user.uid]);
+  }, []);
 
   const fetchOrdersData = async () => {
     setMeals([]);
-    console.log(orders);
-
+    orders.length === 0 ? setOrderStatus(true) : null;
     setIsLoading(true);
     for (const id of orders) {
       const res = await fetch(
@@ -48,6 +49,7 @@ const Uid = ({ user }) => {
         console.log("Data not found for this id");
       }
     }
+
     setIsLoading(false);
     setTotalPrice(orders.length * 500);
     setOrderTotal(orders.length * 500 + 200);
@@ -67,6 +69,7 @@ const Uid = ({ user }) => {
     });
     const filteredOrders = orders.filter((order) => order !== id);
     setOrders(filteredOrders);
+
     setTotalPrice(filteredOrders.length * 500);
     setOrderTotal(filteredOrders.length * 500 + 200);
   };
@@ -89,6 +92,7 @@ const Uid = ({ user }) => {
         </button>
         <div className="grid grid-cols-2 max-sm:grid-cols-1 w-[100vw] items-center justify-between mt-10 ">
           <div className="flex flex-col transition-all justify-center max-sm:mt-2 mt-4 gap-4 max-sm:my-8 max-sm:mx-6 ml-10">
+            {orderStatus || MealsStatus ? <div>Your cart is Empty</div> : null}
             {isLoading ? (
               <div className="flex justify-center items-center">
                 <Circles

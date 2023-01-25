@@ -13,7 +13,7 @@ const Features = () => {
           Our Specialities
         </h1>
       </div>
-      <div className="grid grid-cols-2 max-sm:grid-cols-1 ">
+      <div className="grid grid-cols-2  max-sm:grid-cols-1 ">
         <div className="max-sm:hidden">
           <Image src={image} width={650} height={100} />
         </div>

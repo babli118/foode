@@ -3,7 +3,6 @@ import image from "../images/2.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
-import Loader from "../components/loading";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase/firebaseApp";

@@ -20,18 +20,20 @@ const Foot = () => {
     <div className="h-[60vh] overflow-hidden max-sm:h-[50vh]">
       <div className="h-[18vh] max-sm:hidden max-sm:h-[0vh]  flex flex-col justify-center items-center font-semibold text-2xl text-[#1c2123] bg-red-400 text-center">
         <h1>Enjoy 40% off on your first order</h1>
-        <Link
-          href={user ? "/meals" : "/signin"}
-          className="text-lg mt-4 transform hover:scale-105 group/edit  text-center flex justify-center items-center px-10 py-2 transition-all rounded-lg bg-yellow-400 hover:text-black"
-        >
-          Order Now{" "}
-          <span className="pl-2 group-hover/edit:translate-x-3 transition-all">
-            <img
-              className="w-10 "
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABA0lEQVR4nO3YzSqFQQAG4CHFzokNyUI2JHciV8AVcAt+ljo34iKk7PxlYUlKseIiPJKNEk596pzvm/epWc/Mu5ift5SIiIiIiIiIiIiIEYcZ9EptsI5Ln95whuVSA/Tw5LtXrJWuw66fvWC1dBn6fveMpdJV2PK3RyyWLsIEbgYI4R7zpYuwgIcBQrjD3H9NOo5NHOJoBMaxwdxitunmp3Cqva4x2SSAQ+233ySAa+131SSAK+130SSAA+231ySASZyo9RD8gDFsVHkNjpqhPIRGRfVPYWzX/hnq1/4d3qm9EOlVXYl9KUUvvpSi51gpldbi08NeR0RERERERERERJTWeQff5wzoUc7kpwAAAABJRU5ErkJggg=="
-            ></img>
-          </span>
-        </Link>
+        {user ? null : (
+          <Link
+            href={user ? "/meals" : "/signin"}
+            className="text-lg mt-4 transform hover:scale-105 group/edit  text-center flex justify-center items-center px-10 py-2 transition-all rounded-lg bg-yellow-400 hover:text-black"
+          >
+            Order Now{" "}
+            <span className="pl-2 group-hover/edit:translate-x-3 transition-all">
+              <img
+                className="w-10 "
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABA0lEQVR4nO3YzSqFQQAG4CHFzokNyUI2JHciV8AVcAt+ljo34iKk7PxlYUlKseIiPJKNEk596pzvm/epWc/Mu5ift5SIiIiIiIiIiIiIEYcZ9EptsI5Ln95whuVSA/Tw5LtXrJWuw66fvWC1dBn6fveMpdJV2PK3RyyWLsIEbgYI4R7zpYuwgIcBQrjD3H9NOo5NHOJoBMaxwdxitunmp3Cqva4x2SSAQ+233ySAa+131SSAK+130SSAA+231ySASZyo9RD8gDFsVHkNjpqhPIRGRfVPYWzX/hnq1/4d3qm9EOlVXYl9KUUvvpSi51gpldbi08NeR0RERERERERERJTWeQff5wzoUc7kpwAAAABJRU5ErkJggg=="
+              ></img>
+            </span>
+          </Link>
+        )}
       </div>
       <div>
         {" "}
