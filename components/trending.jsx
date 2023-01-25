@@ -2,9 +2,8 @@ import Image from "next/image";
 import React from "react";
 
 const Trending = ({ trend }) => {
-  console.log(trend);
   return (
-    <div className="py-8 sm:py-2 bg-[#1c2123] px-14 max-sm:px-4 overflow-hidden ">
+    <div className="py-8 sm:pt-2 sm:pb-6  bg-[#1c2123] px-14 max-sm:px-4 overflow-hidden ">
       <h1 className="text-center max-sm:text-2xl max-sm:px-2 text-[#fad233] p-8 text-4xl tag">
         - Trending Meals -
       </h1>
