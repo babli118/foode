@@ -1,16 +1,19 @@
+//& import necessary modules
 import React from "react";
 import Navbar from "../../components/navbar";
-import { db, auth } from "../../firebase/firebaseApp";
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
 import image from "../../images/2.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "../../firebase/firebaseApp";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
 
 const CompleteOrder = () => {
+  //* set initial state for user and success
   const [user, setUser] = useState({});
   const [success, setSuccess] = useState(true);
 
+  //* useEffect to get current user
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -18,6 +21,7 @@ const CompleteOrder = () => {
     return () => {};
   });
 
+  //* function to handle success of payment
   const handleSuccess = (e) => {
     e.preventDefault();
     setSuccess(false);
@@ -84,6 +88,7 @@ const CompleteOrder = () => {
                 </li>
               </ul>
             </header>
+            {/* form to confirm payment using credit card */}
             <form onSubmit={handleSuccess} class="mt-4 p-4">
               <h1 class="text-xl font-semibold text-gray-700 text-center">
                 Card payment

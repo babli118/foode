@@ -1,16 +1,17 @@
 import Head from "next/head";
 import Homepage from "./homepage";
-
 import { auth } from "../firebase/firebaseApp";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 export default function Home({ data }) {
+  // set an initial state for the user
   const [user, setUser] = useState({});
 
   useEffect(() => {
+    // check for any changes in the user's authentication state
     onAuthStateChanged(auth, (currentUser) => {
+      // update the user state with the current user
       setUser(currentUser);
     });
     return () => {};
@@ -39,10 +40,14 @@ export default function Home({ data }) {
   );
 }
 
+// get ServerSideProps runs during the build time and does server side rendering meaning it fetches all the
+// data from the database and returns it as props during build phase.
+
 export async function getServerSideProps() {
+  // making a GET request to the themealdb API Endpoint
   const res = await fetch(
     "https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian"
   );
-  const data = await res.json();
-  return { props: { data } };
+  const data = await res.json(); // parse the response as JSON
+  return { props: { data } }; // return the data as props for the component to use
 }

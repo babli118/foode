@@ -8,6 +8,9 @@ import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 
 const Dropdown = ({ user }) => {
+  // *Dropdown component is used to display a dropdown menu with user information and options. The component takes in a user prop, which is used to display the user's name, email, and profile picture.
+
+  // * using useRouter hook from next/router to access the router object, which is used to navigate to the sign-in page when the user signs out.
   const router = useRouter();
 
   function classNames(...classes) {
@@ -16,10 +19,12 @@ const Dropdown = ({ user }) => {
   let name = user ? user.email : "A";
   let letter = name ? name.charAt(0) : "A";
 
+  // !Signs out the user
   const signOut = () => {
     const auth = getAuth();
     auth.signOut();
 
+    //! sends user to login page
     router.push("/signin");
   };
 
@@ -31,7 +36,8 @@ const Dropdown = ({ user }) => {
       {user ? (
         <div>
           <div>
-            <Menu.Button className="inline-flex w-full z-10 outline-none justify-center items-center rounded-md border border-gray-300 sm:ml-1 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+            <Menu.Button className="inline-flex  w-full z-10 outline-none justify-center items-center rounded-md border border-gray-300 sm:ml-1 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+              {/* checking if user exits and has a profile picture and if he does then showing the profile picture  */}
               {user && user.photoURL ? (
                 <Image
                   alt="carousel"
@@ -41,6 +47,7 @@ const Dropdown = ({ user }) => {
                   className="rounded-full w-12 bg-white h-12 text-red-500 flex items-center justify-center text-center"
                 />
               ) : (
+                //  using his username if he dosent have a profile picture
                 <h1 className="rounded-full w-8 bg-white h-8 text-red-500 flex items-center justify-center text-center">
                   {letter}
                 </h1>

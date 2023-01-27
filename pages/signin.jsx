@@ -12,30 +12,40 @@ import { setDoc, doc } from "firebase/firestore";
 import { Circles } from "react-loader-spinner";
 
 const Signin = () => {
+  // useRouter is a react hook that allows us to access the router
   const router = useRouter();
+  // useState is a react hook that allows us to manage state
   const [pass, setPass] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [user, setUser] = useState({});
+  // create google auth provider
   const provider = new GoogleAuthProvider();
 
+  // useEffect is a react hook that allows us to run side effects when the component renders
   useEffect(() => {
+    // onAuthStateChanged is a function that is called whenever the authentication state changes
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
   });
 
+  // signIn function using google auth provider
   const signIn = async () => {
     try {
+      // sign in user with google provider
       const res = await signInWithPopup(auth, provider);
+      // set user state
       setUser(res);
       setLoading(true);
+      // set user data to firebase
       await setDoc(doc(db, "users", res.user.uid), {
         name: res.user.displayName,
         email: res.user.email,
         orders: [""],
       });
+      // redirect to home page
       router.push("/");
     } catch (error) {
       alert(error.message);
@@ -43,19 +53,25 @@ const Signin = () => {
     }
   };
 
+  // login function using email and password
   const login = async (event) => {
     event.preventDefault();
     try {
+      // sign in user with email and password
       await signInWithEmailAndPassword(auth, email, pass);
       setLoading(true);
+      // log user data
       console.log(user);
+      // redirect to home page
       router.push("/");
     } catch (error) {
       setError(true);
     }
   };
+
   return (
-    <div className="h-[100vh] w-[100vw]">
+    <div className="h-[100vh] w-[100vw] flex justify-center items-center">
+      {/* render loading spinner while user is logging in */}
       {loading ? (
         <div className="h-[100vh] w-[100vw] flex justify-center items-center">
           <div className="flex justify-center items-center">
@@ -71,9 +87,9 @@ const Signin = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-row ">
-          <div className="flex flex-col w-[50vw] border-r-2 h-[100vh] justify-center items-center">
-            <div className="flex flex-col  justify-center items-center">
+        <div className="grid grid-cols-2 max-sm:grid-cols-1 ">
+          <div className="flex flex-col max-sm:hidden w-[50vw] border-r-2 h-[100vh] justify-center items-center">
+            <div className="flex flex-col   justify-center items-center">
               <Image height={100} width={200} src={image} />
               <h1 className="text-red-800 logo text-6xl  ">Foode</h1>
             </div>
@@ -100,6 +116,7 @@ const Signin = () => {
                   required
                   placeholder="Email"
                   onChange={(e) => {
+                    // setting the email value to users input
                     setEmail(e.currentTarget.value);
                   }}
                   className="px-4 py-2 rounded-md outline-none focus:border-[#c8546f] border-2 border-transparent bg-white  shadow-md "
@@ -112,16 +129,18 @@ const Signin = () => {
                   autoComplete="Password"
                   placeholder="Enter your password"
                   onChange={(e) => {
+                    // setting the pass value to users input
                     setPass(e.currentTarget.value);
                   }}
                   className="px-4 py-2 rounded-md outline-none focus:border-[#c8546f] border-2 border-transparent bg-white  shadow-md "
                 />{" "}
+                {/* showing an error if user gives invalid info */}
                 {error ? (
                   <div className="text-red-800 transition-all ">
                     Invalid user name or password
                   </div>
                 ) : null}
-                <button class="px-32 text-white font-semibold text-lg hover:bg-red-500 transition-all py-2 bg-[#c8546f] rounded-lg">
+                <button class="px-32 max-sm:px-6 text-white font-semibold text-lg hover:bg-red-500 transition-all py-2 bg-[#c8546f] rounded-lg">
                   Sign In
                 </button>
               </form>

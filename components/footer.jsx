@@ -3,13 +3,16 @@ import image from "../images/2.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "../firebase/firebaseApp";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 const Foot = () => {
+  // *Footer component of the app which is rendered on every page. It uses a useEffect hook to get the current user from Firebase and sets it to the state variable user. It also uses Next.js's Link component for navigation and Next.js's Image component to load an image.
+
   const [user, setUser] = useState({});
 
   useEffect(() => {
+    // *getting current user from the auth and setting user as him.
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
@@ -17,9 +20,9 @@ const Foot = () => {
   });
 
   return (
-    <div className="h-[60vh] overflow-hidden max-sm:h-[50vh]">
-      <div className="h-[18vh] max-sm:hidden max-sm:h-[0vh]  flex flex-col justify-center items-center font-semibold text-2xl text-[#1c2123] bg-red-400 text-center">
-        <h1>Enjoy 40% off on your first order</h1>
+    <div className="h-[100vh] overflow-hidden max-sm:h-[55vh]">
+      <div className="h-[35vh] max-sm:hidden  text-center  flex flex-col justify-center items-center font-semibold text-2xl text-[#1c2123] bg-red-400 text-center">
+        <h1 className="">Enjoy 40% off on your first order</h1>
         {user ? null : (
           <Link
             href={user ? "/meals" : "/signin"}
@@ -37,9 +40,9 @@ const Foot = () => {
       </div>
       <div>
         {" "}
-        <div className="flex  mt-10 max-sm:mt-0 flex-col items-center">
+        <div className="flex max-sm:h-[15vh] mt-10 max-sm:mt-0 flex-col justify-center items-center">
           <Image height={90} width={90} src={image} />
-          <h1 className="text-red logo text-3xl text-[#c8546f]  ">Foode</h1>
+          <h1 className="text-red logo text-3xl text-[#c8546f]">Foode</h1>
         </div>
       </div>
       <div className="text-center mt-4 text-black">

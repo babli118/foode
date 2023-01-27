@@ -1,3 +1,4 @@
+// Importing required modules
 import React from "react";
 import Navbar from "../../components/navbar";
 import "firebase/firestore";
@@ -5,13 +6,16 @@ import Link from "next/link";
 import Foot from "../../components/footer";
 import { Circles } from "react-loader-spinner";
 import { doc, getDoc } from "firebase/firestore";
-import { db, auth } from "../../firebase/firebaseApp";
+import { db } from "../../firebase/firebaseApp";
 import { updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { arrayRemove } from "firebase/firestore";
-import { useRouter } from "next/router";
+
+//* Component to show cart of logged in user
 
 const Uid = ({ user }) => {
+  //* state variables to store fetched data, order total and loading state
+
   const [meals, setMeals] = useState([]);
   const [orders, setOrders] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
@@ -20,6 +24,7 @@ const Uid = ({ user }) => {
   const [orderStatus, setOrderStatus] = useState(false);
   const [MealsStatus, setMealsStatus] = useState(false);
 
+  //* useEffect to get orders data from firestore
   useEffect(() => {
     async function onLoad() {
       const docRef = doc(db, "users", user.uid);
@@ -33,43 +38,50 @@ const Uid = ({ user }) => {
     onLoad();
   }, []);
 
+  //* function to fetch data of each order
   const fetchOrdersData = async () => {
+    //* reset meals and order status
     setMeals([]);
+
+    // *Check if there are any orders, if not set the order status to true
     orders.length === 0 ? setOrderStatus(true) : null;
     setIsLoading(true);
+
+    //* fetching data for each order
     for (const id of orders) {
       const res = await fetch(
         `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
       );
       const data = await res.json();
-
+      // *checking if we got some data from api and storing it in meals variable
       if (data.meals) {
         setMeals((prevMeals) => [...prevMeals, data.meals[0]]);
       } else {
         console.log("Data not found for this id");
       }
     }
-
+    //* set loading to false and calculate total price
     setIsLoading(false);
     setTotalPrice(orders.length * 500);
     setOrderTotal(orders.length * 500 + 200);
   };
 
+  //! function to handle deletion of an order
   const handleDelete = async (e) => {
     const id = e.target.parentElement.id;
-
     const mealRef = doc(db, "users", user.uid);
 
-    // Remove the selected meal from the document
+    //! Remove the selected meal from the document
     const filteredMeals = meals.filter((meal) => meal.idMeal !== id);
     setMeals(filteredMeals);
-
     await updateDoc(mealRef, {
       orders: arrayRemove(id),
     });
+
     const filteredOrders = orders.filter((order) => order !== id);
     setOrders(filteredOrders);
 
+    // *calculating the price after deleting the order
     setTotalPrice(filteredOrders.length * 500);
     setOrderTotal(filteredOrders.length * 500 + 200);
   };
@@ -79,7 +91,9 @@ const Uid = ({ user }) => {
       <div className="hero">
         <Navbar user={user} />
       </div>
+
       <div className="flex flex-col max-sm:justify-start justify-center max-sm:items-start items-center mb-14  text-center ">
+        {/* button to fetch users cart data on each click */}
         <button
           className="bg-[#cf6a81] flex flex-col items-center justify-center font-semibold text-lg mt-10 max-sm:ml-6 text-white border-1 border-red-500 px-8 py-2 focus:outline-none rounded-full  transform transition duration-300 hover:scale-105"
           onClick={fetchOrdersData}
@@ -90,8 +104,10 @@ const Uid = ({ user }) => {
             src="https://img.icons8.com/ios/50/FFFFFF/food-donor.png"
           />
         </button>
+
         <div className="grid grid-cols-2 max-sm:grid-cols-1 w-[100vw] items-center justify-between mt-10 ">
           <div className="flex flex-col transition-all justify-center max-sm:mt-2 mt-4 gap-4 max-sm:my-8 max-sm:mx-6 ml-10">
+            {/* checking if user have some meals in his cart */}
             {orderStatus || MealsStatus ? <div>Your cart is Empty</div> : null}
             {isLoading ? (
               <div className="flex justify-center items-center">
@@ -106,6 +122,7 @@ const Uid = ({ user }) => {
                 />
               </div>
             ) : (
+              // *mapping user meals to styled divs
               meals.map((meal) => (
                 <div
                   className="flex max-sm:grid max-sm:grid-cols-2 justify-between  transition-all max-sm:gap-2 gap-10 text-start h-18 shadow-2xl items-center border-2  border-black/30 rounded-lg pr-4"
@@ -118,13 +135,16 @@ const Uid = ({ user }) => {
                       src={meal.strMealThumb}
                       alt="meal"
                     />
+
                     <h1 className="text-gray-900 max-sm:text-base text-lg">
                       {meal.strMeal}
                     </h1>
+
                     <div className="bg-red-100  gap-1 max-sm:hidden border max-sm:text-sm font-serif text-red-500 border-red-500 rounded-full text-sm flex justify-center items-center  px-2 py-1 max-sm:ml-0 ml-4">
                       <p>Rs</p> <p>500</p>
                     </div>
                   </div>
+
                   <div className="flex items-center max-sm:gap-4 gap-10 justify-center">
                     <div className="bg-red-100 gap-1 sm:hidden  border max-sm:text-sm font-serif text-red-500 border-red-500 rounded-full text-sm flex justify-center items-center  px-2 py-1 max-sm:ml-0 ml-4">
                       <p>Rs</p> <p>500</p>
@@ -138,7 +158,8 @@ const Uid = ({ user }) => {
                     >
                       <img
                         className="w-10 max-sm:w-[30px]"
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAWUlEQVR4nO2WSQoAIAwD8/9Px5MnKYobFWegR0uobYgEj+Kgjjb3psovoLJrrNN9jAC1o+tNZeZNCALMF4glFGcojMgD7rjqniGcockDShLJfDuMphEAf1AAG+7lG0Wi6xUAAAAASUVORK5CYII="
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAWUlEQVR4nO2WSQoAIAwD
+                        8/9Px5MnKYobFWegR0uobYgEj+Kgjjb3psovoLJrrNN9jAC1o+tNZeZNCALMF4glFGcojMgD7rjqniGcockDShLJfDuMphEAf1AAG+7lG0Wi6xUAAAAASUVORK5CYII="
                       />
                     </button>
                   </div>
@@ -146,20 +167,25 @@ const Uid = ({ user }) => {
               ))
             )}
           </div>
+
           <div className=" bg-[#fec174] text-gray-800 max-sm:mx-6  px-10 py-4 rounded-lg text-left mx-20">
             <h1 className="text-3xl font-bold my-14">Summary</h1>
+
             <div className="flex justify-between text-lg font-semibold my-2 items-center text-center ">
               <h1>Items total:</h1>
               <p>Rs {totalPrice}</p>
             </div>
+
             <div className="flex justify-between text-lg font-semibold my-2 items-center text-center ">
               <h1>Estimated Delivery Total:</h1>
               <p>Rs 200 </p>
             </div>
+
             <div className="flex justify-between text-3xl font-bold my-14 items-center text-center ">
               <h1>Order Total:</h1>
               <p>Rs {orderTotal}</p>
             </div>
+
             <div className="flex items-center justify-center ">
               <Link
                 href={"completeOrder"}
@@ -179,11 +205,14 @@ const Uid = ({ user }) => {
     </div>
   );
 };
-Uid.getInitialProps = async (ctx) => {
-  // Fetch data from external API
-  const { query } = ctx;
+
+//* getting the user's info from the query during build phase and passing it as prop to main component
+Uid.getInitialProps = async (context) => {
+  //* getting the query from context
+  const { query } = context;
 
   // Pass data to the page via props
   return { user: query };
 };
+
 export default Uid;

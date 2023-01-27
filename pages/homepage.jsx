@@ -5,23 +5,28 @@ import Navbar from "../components/navbar";
 import Features from "../components/features";
 import Trending from "../components/trending";
 import Link from "next/link";
+import Foot from "../components/footer";
 
 const Homepage = ({ trend, user }) => {
+  // destructure trend and user props
   return (
     <>
-      <div className="hero relative overflow-hidden sm:h-[100vh] ">
+      <div className="hero relative overflow-hidden  ">
         <Navbar user={user} />
+
         <div className="flex  h-[50vh] overflow-hidden justify-center max-sm:text-5xl items-center  mt-28 text-white flex-col text-7xl font-bold">
-          <h1 className="absolute   flex my-4 flex-col text-center top-44 tag">
+          <h1 className="absolute  flex  flex-col text-center top-36 tag">
             Taste The<span className="max-sm:text-7xl"> Cultures</span>
           </h1>
+          {/* using the next Image tag to render optimized images */}
           <Image
-            className="mt-28 max-sm:mt-14"
+            className="mt-14 max-sm:mt-14"
             src={image}
-            width={500}
+            width={400}
             height={100}
           />
         </div>
+
         <div className="flex justify-center max-sm:mb-10  text-center overflow-hidden items-center ">
           <Link
             href="/meals"
@@ -33,6 +38,7 @@ const Homepage = ({ trend, user }) => {
             </span>
           </Link>
         </div>
+
         <div className="mx-14 sm:mt-12  overflow-hidden text-white max-sm:mx-2 flex justify-between pb-3 items-center ">
           <div>
             <h1 className="font-bold text-2xl max-sm:text-lg  ">
@@ -48,6 +54,9 @@ const Homepage = ({ trend, user }) => {
       </div>
       <Trending trend={trend} />
       <Features />
+      <div className="max-sm:mt-8">
+        <Foot />
+      </div>
     </>
   );
 };

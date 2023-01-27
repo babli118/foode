@@ -6,6 +6,8 @@ import Foot from "./footer";
 import Link from "next/link";
 
 const Features = () => {
+  // *Features component is used to display information about the special features of Foode.
+
   return (
     <div className="max-sm:h-[280vh] overflow-hidden">
       <div className=" bg-[#464d4d] flex justify-center items-center">
@@ -13,9 +15,9 @@ const Features = () => {
           Our Specialities
         </h1>
       </div>
-      <div className="grid grid-cols-2  max-sm:grid-cols-1 ">
+      <div className="grid grid-cols-2 h-[100vh] max-sm:h-auto  max-sm:grid-cols-1 ">
         <div className="max-sm:hidden">
-          <Image src={image} width={650} height={100} />
+          <Image src={image} width={700} height={100} />
         </div>
         <div className="bg-[#cf2237] flex gap-y-10 flex-col max-sm:py-8 text-5xl px-20 text-white justify-center items-center text-center">
           <div className="tag font-semibold">
@@ -42,7 +44,7 @@ const Features = () => {
           </Link>
         </div>
       </div>
-      <div className="grid grid-cols-2 max-sm:grid-cols-1 h-[80vh] ">
+      <div className="grid grid-cols-2  max-sm:h-auto  max-sm:grid-cols-1 h-[100vh] ">
         <div className="bg-[#1c2123] flex gap-y-10 flex-col max-sm:py-8 text-5xl px-20 text-white justify-center items-center text-center">
           <div className="tag font-semibold">
             <h1 className="mb-16 text-3xl">-----Super-----</h1>
@@ -69,9 +71,6 @@ const Features = () => {
         <div className="max-sm:hidden relative">
           <Image src={image2} fill />
         </div>
-      </div>
-      <div className="max-sm:mt-48">
-        <Foot />
       </div>
     </div>
   );

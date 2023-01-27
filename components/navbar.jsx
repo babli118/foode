@@ -6,12 +6,15 @@ import Dropdown from "./dropdown";
 import { useRouter } from "next/router";
 
 const Navbar = ({ user }) => {
+  // *using router to change the class to active if the adress matches with current page
   const router = useRouter();
 
   return (
     <div className="text-white text-lg  ">
       <div className="flex w-[100vw]  max-sm:flex-row px-14 max-sm:px-10 font-bold   py-1 justify-between items-center ">
-        <div className="gap-x-6 items-center justify-center flex max-sm:hidden">
+        <div className="gap-x-6 relative  items-center justify-center flex max-sm:hidden">
+          {/*using Link tags to navigate between pages */}
+
           <Link
             className={
               router.pathname == "/"
@@ -45,12 +48,13 @@ const Navbar = ({ user }) => {
         </div>
         <Link
           href={"/"}
-          className="flex  flex-col justify-center items-center "
+          className="flex   flex-col justify-center items-center "
         >
           <Image height={70} width={75} src={image} />
           <h1 className="text-white logo text-3xl  ">Foode</h1>
         </Link>
         <div className="gap-x-6 sm:mr-4 max-sm:gap-x-4 flex justify-center items-center ">
+          {/*  If the user is logged in, it will render the dropdown and cart icon, otherwise it will not. */}
           {user ? (
             <Link
               title="Cart"

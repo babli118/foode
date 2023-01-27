@@ -1,23 +1,27 @@
 import React from "react";
 import Navbar from "../components/navbar";
-import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { db, auth } from "../firebase/firebaseApp";
 import Foot from "../components/footer";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/firebaseApp";
 
 const About = () => {
+  // state to keep track of whether the form has been successfully submitted
   const [success, setSuccess] = useState(true);
+  // state to keep track of the current user
   const [user, setUser] = useState({});
 
+  // useEffect hook to listen for changes in authentication state
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
+    // cleanup function to prevent memory leaks
     return () => {};
   });
 
+  // function to handle form submission
   const handleSuccess = (e) => {
     e.preventDefault();
     setSuccess(false);
@@ -26,6 +30,7 @@ const About = () => {
   return (
     <div className="bg-white overflow-hidden">
       <div className="hero relative text-gray-800 ">
+        {/*  pass the user state as a prop to the Navbar component */}
         <Navbar user={user} />
       </div>
       {success ? (
@@ -56,6 +61,7 @@ const About = () => {
               reach out to us. We are always happy to hear from our customers!
             </p>
           </div>
+
           <section class="bg-white ">
             <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
               <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-red-800 ">
@@ -65,6 +71,7 @@ const About = () => {
                 Got a technical issue? Want to send feedback about a beta
                 feature? Need details about our Business plan? Let us know.
               </p>
+
               <form onSubmit={handleSuccess} class="space-y-8">
                 <div>
                   <label
@@ -81,6 +88,7 @@ const About = () => {
                     required
                   />
                 </div>
+
                 <div>
                   <label
                     for="subject"
@@ -96,6 +104,7 @@ const About = () => {
                     required
                   />
                 </div>
+
                 <div class="sm:col-span-2">
                   <label
                     for="message"
@@ -110,6 +119,7 @@ const About = () => {
                     placeholder="Leave a comment..."
                   ></textarea>
                 </div>
+
                 <button
                   type="submit"
                   className="bg-red-500 font-semibold text-white border-1 border-red-500 px-4 py-4 focus:outline-none rounded-lg  transform transition duration-300 hover:scale-105"
@@ -138,6 +148,7 @@ const About = () => {
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
+
               <h1 class="text-4xl font-bold">Thank You !</h1>
               <p>
                 Thank you for your interest! Check your email for a link to the

@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Card = ({ meal, cato }) => {
+  //* This component takes in two props, meal and cato, which are used to display information about the meal and its category.
+
   return (
     <Link href={`/${meal.idMeal}`}>
       <div className="bg-white  border shadow-xl border-gray-200 shadow-black/20 transition transform duration-700  hover:scale-105 p-6 rounded-xl relative">
